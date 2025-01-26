@@ -17,7 +17,7 @@ def call_history(method: Callable) -> Callable:
         result = method(self, *args, **kwargs)
 
         # Store Out
-        self._redis.rpush(outputs_key, result)
+        self._redis.rpush(outputs_key, str(result))
         return result
     return wrapper
 
