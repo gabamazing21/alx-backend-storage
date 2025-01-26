@@ -2,12 +2,13 @@
 import requests
 import redis
 from functools import wraps
+from typing import Callable
 
 
 r = redis.Redis()
 
 
-def get_page_count(method: callable):
+def get_page_count(method: Callable):
     """ get page count"""
     @wraps(method)
     def wrapper(url: str) -> str:
@@ -34,4 +35,4 @@ def get_page(url: str) -> str:
     response = requests.get(url, timeout=60)
     # raise an exception for htpp errors
     response.raise_for_status()
-    return response.text
+    return response.content
