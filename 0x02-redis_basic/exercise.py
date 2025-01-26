@@ -12,7 +12,7 @@ def call_history(method: Callable) -> Callable:
         outputs_key = f'{method.__qualname__}:outputs'
 
         # Store input arguments
-        self._redis.rpush(input, str(args))
+        self._redis.rpush(inputs_key, str(args))
 
         result = method(self, *args, **kwargs)
 
@@ -25,7 +25,6 @@ def call_history(method: Callable) -> Callable:
 def count_calls(method: Callable) -> Callable:
     """Decorator to count how many times a method is called."""
     @wraps(method)
-    @call_history
     def wrapper(self, *args, **kwargs):
         """Increment the call count and call the original method."""
         key = method.__qualname__

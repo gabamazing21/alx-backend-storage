@@ -31,7 +31,7 @@ def get_page_count(method: callable):
 @get_page_count
 def get_page(url: str) -> str:
     """ Fetch the html content of a url and return it"""
-    response = requests.get(url)
+    response = requests.get(url, timeout=60)
     # raise an exception for htpp errors
     response.raise_for_status()
     return response.text
