@@ -8,17 +8,17 @@ from functools import wraps
 def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        input = f'{method.__qualname__}:inputs'
-        output = f'{method.__qualname__}:outputs'
+        inputs_key = f'{method.__qualname__}:inputs'
+        outputs_key = f'{method.__qualname__}:outputs'
 
         # Store input arguments
         self._redis.rpush(input, str(args))
 
-        output = method(self, *args, **kwargs)
+        result = method(self, *args, **kwargs)
 
         # Store Out
-        self._redis.rpush(output, output)
-        return output
+        self._redis.rpush(outputs_key, result)
+        return result
     return wrapper
 
 
