@@ -34,6 +34,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 def replay(method: Callable) -> None:
+    """ Use it to show our method historys"""
     r = redis.Redis()
     methodName = method.__qualname__
 
